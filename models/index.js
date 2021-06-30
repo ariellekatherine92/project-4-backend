@@ -21,10 +21,12 @@ db.on('error', (error) => {
 
 //import all of models
 const User = require('./User');
-const Book = require('./Book');
+const Post = require('./Post')
+const Comments = require('./Comments')
 
 //export all models from this file
 module.exports = {
     User,
-    Book,
+    Post,
+    Comments
 }

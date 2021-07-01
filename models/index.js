@@ -22,11 +22,11 @@ db.on('error', (error) => {
 //import all of models
 const User = require('./User');
 const Post = require('./Post')
-const Comments = require('./Comments')
+const Comment = require('./Comment')
 
 //export all models from this file
 module.exports = {
     User,
     Post,
-    Comments
+    Comment
 }

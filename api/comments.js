@@ -5,13 +5,13 @@ const passport = require('passport');
 
 
 // Models
-const { Comments } = require('../models');
+const { Comment } = require('../models');
 
 // Controllers
 const index = async (req, res) => {
     console.log('inside of /api/comments');
     try {
-        const allComments = await Comments.find({});
+        const allComments = await Comment.find({});
 
         res.json({ comments: allComments });
     } catch (error) {
@@ -24,7 +24,7 @@ const index = async (req, res) => {
 const show = async (req, res) => {
     const { id } = req.params;
     try {
-        const comment = await Comments.findById(id);
+        const comment = await Comment.findById(id);
         res.json({ comment });
     } catch (error) {
         console.log('Error inside of /api/comments/:id');
@@ -34,14 +34,11 @@ const show = async (req, res) => {
 }
 
 const create = async (req, res) => {
-    const { title, body } = req.body;
-    const author = req.user.id;
-    console.log(author)
-    const currentPost = req.body.postId;
-    console.log (currentPost);
+    const { title, body, name, date } = req.body;
+    const post = req.body.postId;
+    console.log (post);
     try {
-        const newComment = await Comments.create({ title, body, author});
-        //integrate populate method on new comment
+        const newComment = await Comment.create({ post, title, body, name, date});
         console.log('new comment created', newComment);
         res.json({ comment: newComment });
     } catch (error) {
@@ -55,7 +52,7 @@ const update = async (req, res) => {
     console.log(req.body);
     try {
 
-        const updatedComment = await Comment.update({ title: req.body.title }, req.body); // updating the book
+        const updatedComment = await Comment.update({ title: req.body.title }, req.body); 
         const comment = await Comment.findOne({ title: req.body.title });
 
         console.log(updatedComment); 
@@ -84,20 +81,21 @@ const deleteComment = async (req, res) => {
     }
 }
 
-// GET api/books/test (Public)
+// GET api/comments/test (Public)
 router.get('/test', (req, res) => {
     res.json({ msg: 'Comments endpoint OK!'});
 });
 
-// GET -> /api/books/
-router.get('/', passport.authenticate('jwt', { session: false }), index); 
-// GET -> /api/books/:id
-router.get('/:id', passport.authenticate('jwt', { session: false }), show);
-// POST -> /api/books
-router.post('/', passport.authenticate('jwt', { session: false }), create);
-// PUT -> /api/books
-router.put('/', passport.authenticate('jwt', { session: false }), update);
-// DELETE => /api/books/:id
-router.delete('/:id', passport.authenticate('jwt', { session: false }), deleteComment);
+// GET -> /api/comments/
+router.get('/', index); 
+// GET -> /api/comments/:id
+router.get('/:id', show);
+// POST -> /api/comments
+router.post('/', create);
+// PUT -> /api/comments
+router.put('/', update);
+// DELETE => /api/comments/:id
+router.delete('/:id', deleteComment);
 
 module.exports = router;
+

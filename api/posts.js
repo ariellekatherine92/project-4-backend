@@ -88,14 +88,14 @@ router.get('/test', (req, res) => {
 });
 
 // GET -> /api/books/
-router.get('/', passport.authenticate('jwt', { session: false }), index); 
+router.get('/', index); 
 // GET -> /api/books/:id
-router.get('/:id', passport.authenticate('jwt', { session: false }), show);
+router.get('/:id', show);
 // POST -> /api/books
-router.post('/', passport.authenticate('jwt', { session: false }), create);
+router.post('/', create);
 // PUT -> /api/books
-router.put('/', passport.authenticate('jwt', { session: false }), update);
+router.put('/', update);
 // DELETE => /api/books/:id
-router.delete('/:id', passport.authenticate('jwt', { session: false }), deletePost);
+router.delete('/:id', deletePost);
 
 module.exports = router;

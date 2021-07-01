@@ -34,13 +34,15 @@ const show = async (req, res) => {
 }
 
 const create = async (req, res) => {
-    const { title, body } = req.body;
-    const author = req.user.id;
-    console.log(author)
+    const { title, body, name, date } = req.body;
+    // const author = req.user.id;
+    // console.log(author)
     const currentPost = req.body.postId;
     console.log (currentPost);
     try {
-        const newComment = await Comments.create({ title, body, author});
+        const newComment = await Comments.create({ title, body, name, date});
+
+        // const newComment = await Comments.create({ title, body, author});
         //integrate populate method on new comment
         console.log('new comment created', newComment);
         res.json({ comment: newComment });
@@ -90,14 +92,14 @@ router.get('/test', (req, res) => {
 });
 
 // GET -> /api/books/
-router.get('/', passport.authenticate('jwt', { session: false }), index); 
+router.get('/', index); 
 // GET -> /api/books/:id
-router.get('/:id', passport.authenticate('jwt', { session: false }), show);
+router.get('/:id', show);
 // POST -> /api/books
-router.post('/', passport.authenticate('jwt', { session: false }), create);
+router.post('/', create);
 // PUT -> /api/books
-router.put('/', passport.authenticate('jwt', { session: false }), update);
+router.put('/', update);
 // DELETE => /api/books/:id
-router.delete('/:id', passport.authenticate('jwt', { session: false }), deleteComment);
+router.delete('/:id', deleteComment);
 
 module.exports = router;

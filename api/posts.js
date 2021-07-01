@@ -35,6 +35,20 @@ const show = async (req, res) => {
     }
 }
 
+const author = async (req, res) => {
+    const { id } = req.params;
+    try {
+        // look for book based on id
+        const post = await Post.find({author:id});
+        console.log(post)
+        res.json({ post });
+    } catch (error) {
+        console.log('Error inside of /api/posts/:author');
+        console.log(error);
+        return res.status(400).json({ message: 'Post not found. Try again...' });
+    }
+}
+
 const create = async (req, res) => {
     const { title, body } = req.body;
     const author = req.user.id;
@@ -92,6 +106,8 @@ router.get('/test', (req, res) => {
 router.get('/', index); 
 // GET -> /api/posts/:id
 router.get('/:id', show);
+//GET -> /api/posts/
+router.get('/author/:id', author);
 // POST -> /api/posts
 router.post('/', passport.authenticate('jwt', { session: false }), create);
 // PUT -> /api/posts

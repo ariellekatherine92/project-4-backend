@@ -11,7 +11,7 @@ const { Comment } = require('../models');
 const index = async (req, res) => {
     console.log('inside of /api/comments');
     try {
-        const allComments = await Comments.find({});
+        const allComments = await Comment.find({});
 
         res.json({ comments: allComments });
     } catch (error) {
@@ -52,7 +52,7 @@ const update = async (req, res) => {
     console.log(req.body);
     try {
 
-        const updatedComment = await Comment.update({ title: req.body.title }, req.body); // updating the book
+        const updatedComment = await Comment.update({ title: req.body.title }, req.body); 
         const comment = await Comment.findOne({ title: req.body.title });
 
         console.log(updatedComment); 
@@ -98,3 +98,4 @@ router.put('/', update);
 router.delete('/:id', deleteComment);
 
 module.exports = router;
+

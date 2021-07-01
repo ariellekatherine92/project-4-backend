@@ -6,7 +6,7 @@ const passport = require('passport');
 
 
 // Models
-const { Post } = require('../models');
+const { Post, Comment } = require('../models');
 
 // Controllers
 const index = async (req, res) => {
@@ -27,7 +27,8 @@ const show = async (req, res) => {
     try {
         // look for book based on id
         const post = await Post.findById(id);
-        res.json({ post });
+        const comments = await Comment.find({post:post._id})
+        res.json({ post, comments});
     } catch (error) {
         console.log('Error inside of /api/posts/:id');
         console.log(error);
@@ -109,7 +110,7 @@ router.get('/:id', show);
 //GET -> /api/posts/
 router.get('/author/:id', author);
 // POST -> /api/posts
-router.post('/', passport.authenticate('jwt', { session: false }), create);
+router.post('/', passport.authenticate('jwt', { session: false }), create)
 // PUT -> /api/posts
 router.put('/', passport.authenticate('jwt', { session: false }), update);
 // DELETE => /api/posts/:id

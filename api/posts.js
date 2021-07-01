@@ -89,9 +89,9 @@ router.get('/test', (req, res) => {
 });
 
 // GET -> /api/posts/
-router.get('/', passport.authenticate('jwt', { session: false }), index); 
+router.get('/', index); 
 // GET -> /api/posts/:id
-router.get('/:id', passport.authenticate('jwt', { session: false }), show);
+router.get('/:id', show);
 // POST -> /api/posts
 router.post('/', passport.authenticate('jwt', { session: false }), create);
 // PUT -> /api/posts

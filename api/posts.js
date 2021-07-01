@@ -37,9 +37,10 @@ const show = async (req, res) => {
 
 const create = async (req, res) => {
     const { title, body } = req.body;
+    const author = req.user.id;
 
     try {
-        const newPost = await Post.create({ title, body });
+        const newPost = await Post.create({ title, body, author });
         console.log('new post created', newPost);
         res.json({ post: newPost });
     } catch (error) {
@@ -82,20 +83,20 @@ const deletePost = async (req, res) => {
     }
 }
 
-// GET api/books/test (Public)
+// GET api/posts/test (Public)
 router.get('/test', (req, res) => {
     res.json({ msg: 'Posts endpoint OK!'});
 });
 
-// GET -> /api/books/
-router.get('/', index); 
-// GET -> /api/books/:id
-router.get('/:id', show);
-// POST -> /api/books
-router.post('/', create);
-// PUT -> /api/books
-router.put('/', update);
-// DELETE => /api/books/:id
-router.delete('/:id', deletePost);
+// GET -> /api/posts/
+router.get('/', passport.authenticate('jwt', { session: false }), index); 
+// GET -> /api/posts/:id
+router.get('/:id', passport.authenticate('jwt', { session: false }), show);
+// POST -> /api/posts
+router.post('/', passport.authenticate('jwt', { session: false }), create);
+// PUT -> /api/posts
+router.put('/', passport.authenticate('jwt', { session: false }), update);
+// DELETE => /api/posts/:id
+router.delete('/:id', passport.authenticate('jwt', { session: false }), deletePost);
 
 module.exports = router;

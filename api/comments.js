@@ -52,7 +52,7 @@ const update = async (req, res) => {
     console.log(req.body);
     try {
 
-        const updatedComment = await Comment.update({ title: req.body.title }, req.body); 
+        const updatedComment = await Comment.updateOne({ title: req.body.title }, req.body); 
         const comment = await Comment.findOne({ title: req.body.title });
 
         console.log(updatedComment); 

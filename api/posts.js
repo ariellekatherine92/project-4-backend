@@ -25,7 +25,7 @@ const index = async (req, res) => {
 const show = async (req, res) => {
     const { id } = req.params;
     try {
-        // look for book based on id
+        // look for posts based on id
         const post = await Post.findById(id);
         const comments = await Comment.find({post:post._id})
         res.json({ post, comments});

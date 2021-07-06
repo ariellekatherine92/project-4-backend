@@ -52,8 +52,8 @@ const update = async (req, res) => {
     console.log(req.body);
     try {
 
-        const updatedComment = await Comment.updateOne({ title: req.body.title }, req.body); 
-        const comment = await Comment.findOne({ title: req.body.title });
+        const updatedComment = await Comment.updateOne({ id: req.body._id }, req.body); 
+        const comment = await Comment.findOne({ id: req.body._id });
 
         console.log(updatedComment); 
         console.log(comment); 

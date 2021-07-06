@@ -15,7 +15,7 @@ const index = async (req, res) => {
 
         res.json({ comments: allComments });
     } catch (error) {
-        console.log('Error inside of /api/posts');
+        console.log('Error inside of /api/comments');
         console.log(error);
         return res.status(400).json({ message: 'Comment not found. Please try again.' });
     }
@@ -52,8 +52,8 @@ const update = async (req, res) => {
     console.log(req.body);
     try {
 
-        const updatedComment = await Comment.updateOne({ title: req.body.title }, req.body); 
-        const comment = await Comment.findOne({ title: req.body.title });
+        const updatedComment = await Comment.updateOne({ id: req.body._id }, req.body); 
+        const comment = await Comment.findOne({ id: req.body._id });
 
         console.log(updatedComment); 
         console.log(comment); 
@@ -73,7 +73,7 @@ const deleteComment = async (req, res) => {
         console.log(id);
         const result = await Comment.findByIdAndRemove(id);
         console.log(result);
-        res.redirect('/api/commentss');
+        res.redirect('/api/comments');
     } catch (error) {
         console.log('inside of DELETE route');
         console.log(error);

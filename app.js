@@ -35,6 +35,9 @@ app.get('/*', (req, res) => {
     res.status(404).json({ message: 'Data not found' });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is listening 🎧 on port: ${PORT}`);
-});
+app.set("port", process.env.PORT || 9000);
+
+let server = app.listen(app.get("port"));
+// app.listen(PORT, () => {
+//     console.log(`Server is listening 🎧 on port: ${PORT}`);
+// });
